@@ -8,6 +8,22 @@ module.exports = {
 		});
 	},
 
+	search: function (req, res) {
+		var key = req.query.key;
+
+		User.find({}, function (err, data) {
+			var users = [];
+
+			users = data.filter(function (user) {
+				return user.name.toLowerCase().indexOf(key.toLowerCase()) !== -1;
+			})
+
+			res.render('./users/users', {
+				users: users
+			})
+		})
+	},
+
 	create: function (req, res) {
 		res.render('./users/create');
 	},
