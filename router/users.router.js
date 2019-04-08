@@ -13,4 +13,8 @@ router.get('/create', controller.create);
 
 router.post('/create', controller.postCreate);
 
+router.get('/:id', controller.view);
+
+router.get('/detele/:id', controller.detele);
+
 module.exports = router;

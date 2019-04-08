@@ -22,5 +22,23 @@ module.exports = {
 				users: data
 			})
 		})
-	}	
+	},
+
+	view: function (req, res) {
+		var id = req.params.id;
+
+		User.findOne({_id: id}, function (err, data) {
+			res.render('./users/view', {
+				user: data
+			})
+		})
+	},
+
+	detele: function (req, res) {
+		var id = req.params.id;
+
+		User.deleteOne({_id: id}, function (err, data) {});
+
+		res.redirect('/users');
+	}
 }
