@@ -3,7 +3,6 @@ var User = require('../models/user.model');
 module.exports = {
 	users: async function (req, res) {
 		var users = await User.find();
-		console.log(users);
 		res.render('./users/users', {
 			users: users
 		});
@@ -16,7 +15,12 @@ module.exports = {
 	postCreate: function (req, res) {
 		User.create(req.body, function(err, data) {
 			if (err) return handleError(err);
-		})
+		});
 
-	}
+		User.find({}, function (err, data) {
+			res.render('./users/users', {
+				users: data
+			})
+		})
+	}	
 }
