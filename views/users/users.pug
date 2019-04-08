@@ -1,0 +1,29 @@
+extends ../header/header.pug
+
+block content	
+	h1 Users
+		a(href="/users/create").btn.btn-primary.ml-3 New
+	
+	form(action="/users/search" method="GET" class="form-group") 
+		input(type="text" name="q" id="input" class="form-group mr-3 ml-2")
+		button.btn.btn-primary Search
+	
+
+	table.table.table-bordered
+		thead.thead-light
+			tr
+				th Avatar
+				th Name
+				th Phone
+				th View / Detele
+		tbody
+			each user in users
+				tr
+					td
+						//- img(src=user.avatar)
+					td= user.name
+					td= user.phone
+					td
+						a(href="/users/" + user.id) View
+						span  / 
+						a(href="/users/detele/" + user.id ) Detele
