@@ -28,16 +28,12 @@ module.exports = {
 		res.render('./users/create');
 	},
 
-	postCreate: function (req, res) {
+	postCreate: function (req, res, next) {
 		User.create(req.body, function(err, data) {
 			if (err) return handleError(err);
 		});
 
-		User.find({}, function (err, data) {
-			res.render('./users/users', {
-				users: data
-			})
-		})
+		res.redirect('/users');
 	},
 
 	view: function (req, res) {

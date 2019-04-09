@@ -1,0 +1,24 @@
+// git commit 
+
+// git log
+// git show
+// git diff
+
+// git checkout -- <file>
+// git reset
+
+// git checkout -b <branch> (branching)
+// git checkout <branch>
+// git merge
+
+// git reset --soft <to_commit>
+// git reset --mixed <to_commit>
+// git reset --hard <to_commit>
+
+// git revert <commit>
+
+// git config --global credential.helper "cache --timeout=18000"
+
+// git clone
+// git pull
+

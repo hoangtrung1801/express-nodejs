@@ -1,0 +1,78 @@
+[1mdiff --git a/controller/users.controller.js b/controller/users.controller.js[m
+[1mindex ec96cb6..4dc13b7 100644[m
+[1m--- a/controller/users.controller.js[m
+[1m+++ b/controller/users.controller.js[m
+[36m@@ -29,15 +29,18 @@[m [mmodule.exports = {[m
+ 	},[m
+ [m
+ 	postCreate: function (req, res) {[m
+[32m+[m		[32mconsole.log(req.body);[m
+ 		User.create(req.body, function(err, data) {[m
+ 			if (err) return handleError(err);[m
+ 		});[m
+ [m
+[31m-		User.find({}, function (err, data) {[m
+[31m-			res.render('./users/users', {[m
+[31m-				users: data[m
+[31m-			})[m
+[31m-		})[m
+[32m+[m		[32m// User.find({}, function (err, data) {[m
+[32m+[m		[32m// 	res.render('./users/users', {[m
+[32m+[m		[32m// 		users: data,[m
+[32m+[m		[32m// 	})[m
+[32m+[m		[32m// })[m
+[32m+[m
+[32m+[m		[32mres.redirect('/users');[m
+ 	},[m
+ [m
+ 	view: function (req, res) {[m
+[1mdiff --git a/router/users.router.js b/router/users.router.js[m
+[1mindex d3ac5e4..42b2c05 100644[m
+[1m--- a/router/users.router.js[m
+[1m+++ b/router/users.router.js[m
+[36m@@ -2,8 +2,9 @@[m [mvar express = require('express');[m
+ var multer = require('multer'); // v1.0.5[m
+ [m
+ var controller = require('../controller/users.controller');[m
+[32m+[m[32mvar validate = require('../validate/users.validate');[m
+ [m
+[31m-var upload = multer(); // for parsing multipart/form-data[m
+[32m+[m[32mvar upload = multer({ dest: 'uploads/' })[m
+ [m
+ var router = express.Router();[m
+ [m
+[36m@@ -11,7 +12,7 @@[m [mrouter.get('/',  controller.users);[m
+ [m
+ router.get('/search', controller.search)[m
+ [m
+[31m-router.get('/create', controller.create);[m
+[32m+[m[32mrouter.get('/create',  upload.single('avatar'), controller.create);[m
+ [m
+ router.post('/create', controller.postCreate);[m
+ [m
+[1mdiff --git a/views/users/create.pug b/views/users/create.pug[m
+[1mindex 909dfd9..ed3d24b 100644[m
+[1m--- a/views/users/create.pug[m
+[1m+++ b/views/users/create.pug[m
+[36m@@ -9,7 +9,7 @@[m [mblock content[m
+ 			.alert.alert-danger= error[m
+ [m
+ [m
+[31m-	form(action="/users/create" method="POST")[m
+[32m+[m	[32mform(action="/users/create" method="POST" enctype="multipart/form-data")[m
+ 		.form-group[m
+ 			label(for="name") Name[m
+ 			input#name.form-control(type="text", placeholder="Name", name="name", value=value ? value.name : '')[m
+[1mdiff --git a/views/users/users.pug b/views/users/users.pug[m
+[1mindex 7935fa3..f6176f5 100644[m
+[1m--- a/views/users/users.pug[m
+[1m+++ b/views/users/users.pug[m
+[36m@@ -4,7 +4,7 @@[m [mblock content[m
+ 	h1 Users[m
+ 		a(href="/users/create").btn.btn-primary.ml-3 New[m
+ 	[m
+[31m-	form(action="/users/search" method="GET" class="form-group") [m
+[32m+[m	[32mform(action="/users/search" method="GET" class="form-group" )[m[41m [m
+ 		input(type="text" name="key" id="input" class="form-group mr-3 ml-2")[m
+ 		button.btn.btn-primary Search[m
+ 	[m
