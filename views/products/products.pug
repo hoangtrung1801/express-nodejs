@@ -1,0 +1,31 @@
+extends ../header/header.pug
+
+block content	
+	h1 Products
+
+	if page==1
+		- var pages = [page, page + 1, page + 2]
+	else if page==maxPage
+		- var pages = [page - 2, page - 1, page]
+	else
+		- var pages = [page - 1, page, page + 1]
+
+	.pagination
+		ul.pagination
+			li.page-item
+				a.page-link(href="/products?page=" + (page - 1)) Previous
+			each i in pages
+				li.page-item
+					a.page-link(href='/products?page=' + i)= i
+			li.page-item
+				a.page-link(href="/products?page=" + (page + 1)) Next
+	
+	.products.d-flex.flex-wrap.mt-5
+		each product in products
+			.card.mr-1.ml-1.mb-1.mt-1(style='width:23%')
+				img.card-img-bottom(src=product.image, style='width:100%')
+				.card-body(style='height:150px; overflow: hidden')
+					h6.card-title= product.name
+					p.card-text= product.description
+				.card-footer
+					a.btn.btn-primary(href='/products/add/' + product.id) Add to cart
