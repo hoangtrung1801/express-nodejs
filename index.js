@@ -1,13 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
 
 var app = express();
 
 var usersRoute = require('./router/users.router');
 var productsRoute = require('./router/products.router');
 var cartRoute = require('./router/cart.router');
+var transferRoute = require('./router/transfer.router');
 
 var sessionIdMiddleware = require('./middleware/sessionId.middleware');
 
@@ -26,6 +27,7 @@ app.use(sessionIdMiddleware);
 app.use('/users', usersRoute);
 app.use('/products', productsRoute);
 app.use('/cart', cartRoute);
+app.use('/transfer', transferRoute);
 
 app.get('/', function (req, res) {
 	res.render('./home');
