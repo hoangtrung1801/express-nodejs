@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var sessionIdSchema = new Schema({
 	carts: {
 		type: Map,
-		of: String
+		of: Number
 	}
 });
 

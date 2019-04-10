@@ -11,13 +11,13 @@ block content
 				th Desciption
 				th Amount
 			tbody
-				//- each cart in carts
-				//- 	tr
-				//- 		td
-				//- 			img(src=cart.image style="width: 60px")
-				//- 		td= cart.name
-				//- 		td= cart.description
-				//- 		//- td= cart.amount
+				each cart in carts
+					tr
+						td
+							img(src=cart.image style="width: 60px")
+						td= cart.name
+						td= cart.description
+						td= cart.amount
 
 
 
